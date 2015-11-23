@@ -43,13 +43,52 @@ require_relative 'spec_helper'
       expect(alive.count).to eq(1)
     end
 
-    it "should die whene 3 live neighber given" do
+    it "should die when is on board and 1 live neighber given" do
+      board = Board.new
+      board.add_point Point.new(1, 1)
+      board.add_point Point.new(1, 2)
+
+      result = board.czy_przezyje(Point.new(1, 2))
+      expect(result).to eq(false)
+    end
+
+    it "should stay alive when is on board and 3 live neighber given" do
+      board = Board.new
+      board.add_point Point.new(2, 3)
+      board.add_point Point.new(4, 3)
+      board.add_point Point.new(3, 3)
+
+      result = board.czy_przezyje(Point.new(3, 3))
+      expect(result).to eq(true)
+    end
+
+    it "should return true when point on board" do
       board = Board.new
       board.add_point Point.new(1, 3)
       board.add_point Point.new(2, 2)
 
-      alive = board.alive_neighbers(Point.new(1, 3))
-      expect(alive.count).to eq(1)
+      result = board.on_board?(Point.new(1, 3))
+      expect(result).to eq(true)
+    end
+
+    it "should born when 3 live neighber given" do
+      board = Board.new
+      board.add_point Point.new(2, 3)
+      board.add_point Point.new(4, 3)
+      board.add_point Point.new(4, 4)
+
+      result = board.czy_urodzi_sie(Point.new(3, 3))
+      expect(result).to eq(true)
+    end
+
+    it "should set next round board" do
+      board = Board.new
+      board.add_point Point.new(2, 3)
+      board.add_point Point.new(4, 3)
+      board.add_point Point.new(4, 4)
+
+      result = board.next_round()
+      expect(result).to eq(true)
     end
 
   end
