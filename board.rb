@@ -1,7 +1,10 @@
 require_relative 'point'
 require 'set'
+require 'curses'
 
 class Board
+
+  attr_reader :points
 
   def initialize
     @points = Set.new
@@ -36,7 +39,45 @@ class Board
     alive_neighbers(point).count == 3 ? true : false
   end
 
+  def decide(point)
+    if on_board?(point) then
+      czy_przezyje(point)
+    else
+      czy_urodzi_sie(point)
+    end
+  end
+
   def next_round
-    @points
+    board_new = Board.new
+    @points.each{|point|
+      board_new.add_point point if self.decide(point)
+      point.neighbors.each { |neigh|
+        board_new.add_point neigh if self.decide(neigh)
+      }
+    }
+    board_new
+  end
+
+  def print
+    Curses.init_screen
+    Curses.close_screen
+    # begin
+      @points.each{ |point|
+        Curses.setpos(point.x, point.y)  # column 6, row 3
+        Curses.addstr("X")
+      }
+    Curses.refresh
+      # Curses.getch  # Wait until user presses some key.
+    # ensure
+
+    # end
+  end
+
+  def equal?(other)
+    @points == other.points
+  end
+
+  def ==(other)
+    equal? other
   end
 end

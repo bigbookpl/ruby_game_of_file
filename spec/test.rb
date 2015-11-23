@@ -81,14 +81,19 @@ require_relative 'spec_helper'
       expect(result).to eq(true)
     end
 
-    it "should set next round board" do
+    it "should set new board when next_round" do
       board = Board.new
       board.add_point Point.new(2, 3)
       board.add_point Point.new(4, 3)
       board.add_point Point.new(4, 4)
 
+      board_new = Board.new
+      board_new.add_point Point.new(3, 3)
+      board_new.add_point Point.new(3, 4)
+
       result = board.next_round()
-      expect(result).to eq(true)
+      expect(result).to eq(board_new)
     end
+
 
   end
