@@ -9,7 +9,7 @@ class Point
 
   #
   # @return [Set<Point>]
-  def neighbors()
+  def candidates()
     @result.clear
     (@x-1).upto(@x+1) { |x|
       (@y-1).upto(@y+1) { |y|
