@@ -6,3 +6,7 @@ rvm:
   - rbx-2.1.1
   - 1.8.7
   - ree
+
+addons:
+  code_climate:
+    repo_token: 35d626059dc218b8a1fafc52bcac3ba6d94b
